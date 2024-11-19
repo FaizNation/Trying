@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CashManagementApp",
+            "request": "launch",
+            "mainClass": "CashManagementApp",
+            "projectName": "VsCode_83c1b501"
+        },
+        {
+            "type": "java",
             "name": "Array",
             "request": "launch",
             "mainClass": "Array",
