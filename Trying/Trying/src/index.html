@@ -12,7 +12,7 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            background-image: url('background.jpg'); /* Ganti 'background.jpg' dengan path gambar latar yang diinginkan */
+            background-image: url('background.jpg'); /* Ganti dengan gambar pilihan Anda */
             background-size: cover;
             color: white;
             text-align: center;
@@ -26,6 +26,9 @@
         .display {
             margin-bottom: 20px;
             font-size: 2em;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
         }
         .buttons {
             display: grid;
@@ -40,9 +43,13 @@
             border: none;
             color: white;
             border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+        .button:hover {
+            background-color: #45a049;
         }
         .button:active {
-            background-color: #45a049;
+            background-color: #3e8e41;
         }
     </style>
 </head>
@@ -61,7 +68,7 @@
             <button class="button" onclick="appendNumber('7')">7</button>
             <button class="button" onclick="appendNumber('8')">8</button>
             <button class="button" onclick="appendNumber('9')">9</button>
-            <button class="button" onclick="appendNumber('')"></button>
+            <button class="button" onclick="appendNumber('*')">*</button>
             <button class="button" onclick="appendNumber('0')">0</button>
             <button class="button" onclick="calculate()">=</button>
             <button class="button" onclick="clearDisplay()">C</button>
@@ -91,45 +98,54 @@
             } catch {
                 result = "Error";
             }
-
             displayResult(result);
         }
 
         function displayResult(result) {
-            switch(result) {
+            switch (result) {
                 case 1:
-                    display.innerText = "1";
+                    display.innerText = "Jmk";
                     break;
                 case 2:
                     display.innerText = "48";
                     break;
                 case 3:
-                    display.innerText = "jmk";
+                    display.innerText = "Si imut";
                     break;
                 case 4:
-                    display.innerText = "fuad";
+                    display.innerText = "Fuad";
                     break;
                 case 5:
-                    display.innerText = "rusdi";
+                    display.innerText = "Rusdi";
                     break;
                 case 6:
-                    display.innerText = "si imut";
+                    display.innerText = "Yes King";
                     break;
                 case 7:
-                    display.innerText = "yes king";
+                    display.innerText = "Suki Fomo";
                     break;
                 case 8:
-                    display.innerText = "suki fomo";
+                    display.innerText = "Ambatukam";
                     break;
                 case 9:
-                    display.innerText = "ambatukam";
-                    break;
-                case 10:
-                    display.innerText = "kapal karam";
+                    display.innerText = "Kapal Karam";
                     break;
                 default:
-                    display.innerText = result;
+                    display.innerText = getRandomMessage();
             }
+        }
+
+        function getRandomMessage() {
+            const messages = [
+                "awkowkowk kocakk lu bangg",
+                "jan lupa pollow ig faiz_nati00n yh bg",
+                "ERROR!!! WEH KOK BISA?",
+                "lukiimakk",
+                "makrup kebab",
+                "yoga durian",
+                "popmiepopmiepopmie"
+            ];
+            return messages[Math.floor(Math.random() * messages.length)];
         }
     </script>
 </body>
