@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class ClassCashManagementApp {
@@ -40,13 +39,9 @@ public class ClassCashManagementApp {
                 System.out.println("|----------------------------------------------|");
                 System.out.printf("| %-2s | %-39s |\n", "5", "Hapus data siswa");
                 System.out.println("|----------------------------------------------|");
-                System.out.printf("| %-2s | %-39s |\n", "6", "Edit nama siswa");
+                System.out.printf("| %-2s | %-39s |\n", "6", "Tampilkan total kas");
                 System.out.println("|----------------------------------------------|");
-                System.out.printf("| %-2s | %-39s |\n", "7", "Manipulasi String");
-                System.out.println("|----------------------------------------------|");
-                System.out.printf("| %-2s | %-39s |\n", "8", "Tampilkan total kas");
-                System.out.println("|----------------------------------------------|");
-                System.out.printf("| %-2s | %-39s |\n", "9", "Keluar");
+                System.out.printf("| %-2s | %-39s |\n", "7", "Keluar");
                 System.out.println("|==============================================|");
                 System.out.print("Pilih menu: ");
                 int pilihan = scanner.nextInt();
@@ -58,19 +53,15 @@ public class ClassCashManagementApp {
                     case 1 -> {
                         System.out.print("Masukkan nama siswa: ");
                         scanner.nextLine();
-                        String nama = scanner.nextLine().trim();
-
-                        // Validasi nama tidak kosong dan tidak mengandung angka
-                        if (nama.isEmpty() || nama.matches(".*\\d.*")) {
-                            System.out.println("Nama tidak boleh kosong atau mengandung angka. Coba lagi.");
-                            break;
-                        }
-
+                        String nama = scanner.nextLine();
+                        
                         // Manipulasi string
                         System.out.println("Nama disimpan dengan huruf kapital: " + nama.toUpperCase());
                         System.out.print("Masukkan jumlah kas " + nama.toUpperCase() + ": ");
                         double kas = scanner.nextDouble();
-
+                        String formatRupiah = String.format("Rp %,d", (int) kas);
+                        System.out.println("Kas: " + nama.toUpperCase() + formatRupiah);
+                        
                         // Tambahkan data ke ArrayList
                         namaSiswa.add(nama.toUpperCase());
                         kasSiswa.add(kas);
@@ -86,7 +77,8 @@ public class ClassCashManagementApp {
                         } else {
                             System.out.println("\nDaftar Siswa:");
                             for (int i = 0; i < namaSiswa.size(); i++) {
-                                System.out.printf("%d. %s - Kas: Rp %.2f\n", (i + 1), namaSiswa.get(i), kasSiswa.get(i));
+                                String formatRupiah = String.format("Rp %.d", kasSiswa.get(i).intValue());
+                                System.out.printf("%d. %s - Kas: %s\n", (i + 1), namaSiswa.get(i), formatRupiah);
                             }
 
                             System.out.print("Masukkan nomor siswa yang ingin menambah kas: ");
@@ -122,9 +114,9 @@ public class ClassCashManagementApp {
                             totalPengeluaran += pengeluaranKasAmount; // Tambahkan ke total pengeluaran
                             pengeluaranKas.add(pengeluaranKasAmount);
                             alasanPengeluaran.add(keteranganPengeluaran);
-                            System.out.println("Pengeluaran sebesar Rp " + pengeluaranKasAmount + " berhasil dicatat.");
                             System.out.println("Keterangan: " + keteranganPengeluaran);
-                            System.out.println("Total kas sekarang: Rp " + totalKas);
+                            String formatRupiah = String.format("Rp %.d", (int) pengeluaranKasAmount);
+                            System.out.println("Pengeluaran sebesar " + formatRupiah + " berhasil dicatat.");
                         } else {
                             System.out.println("Total kas tidak mencukupi untuk pengeluaran sebesar itu.");
                         }
@@ -134,7 +126,8 @@ public class ClassCashManagementApp {
                     case 4 -> {
                         if (namaSiswa.isEmpty()) {
                             System.out.println("Belum ada data siswa.");
-                        } else {
+                        } 
+                        else {
                             System.out.println("|==========================================================================|");
                             System.out.println("|    |            PEMASUKAN               |            PENGELUARAN         |");
                             System.out.println("|==========================================================================|");
@@ -143,32 +136,33 @@ public class ClassCashManagementApp {
                             
                             // Tampilkan Pemasukan
                             for (int i = 0; i < namaSiswa.size(); i++) {
-                                // Format untuk nama dan kas
-                                System.out.printf("| %-2d | %-19s | %-12.2f | %-17s | %-10s |\n", 
+                                String formatRupiahPemasukan = String.format("Rp %.d", kasSiswa.get(i).intValue());
+                                System.out.printf("| %-2d | %-19s | %-12s | %-17s | %-10s |\n", 
                                                   (i + 1), 
                                                   namaSiswa.get(i), 
-                                                  kasSiswa.get(i), 
+                                                  formatRupiahPemasukan, 
                                                   "", 
                                                   "");
                             }
                             System.out.println("|----|---------------------|--------------|-------------------|------------|");
                             // Tampilkan Pengeluaran
                             for (int i = 0; i < alasanPengeluaran.size(); i++) {
-                                // Format untuk pengeluaran
-                                System.out.printf("| %-2s | %-19s | %-12s | %-17s | %-10.2f |\n", 
-                                (i + 1), 
+                                String formatRupiahPengeluaran = String.format("Rp %.d", pengeluaranKas.get(i).intValue());
+                                System.out.printf("| %-2s | %-19s | %-12s | %-17s | %-10s |\n", 
+                                                  (i + 1), 
                                                   "", 
                                                   "", 
                                                   alasanPengeluaran.get(i), 
-                                                  pengeluaranKas.get(i));
+                                                  formatRupiahPengeluaran);
                             }
-
-                            System.out.println("|----|---------------------|--------------|-------------------|------------|");
-                            System.out.printf("| %-24s | %-45.2f |\n", "TOTAL PEMASUKAN:", totalPemasukan);
-                            System.out.printf("| %-24s | %-45.2f |\n", "TOTAL PENGELUARAN:", totalPengeluaran);
-                            System.out.println("|--------------------------|-----------------------------------------------|");
-                            System.out.printf("| %-24s | %-45.2f |\n", "JUMLAH KAS SEKARANG:", totalKas);
-                            System.out.println("|==========================================================================|");
+                            String formatTotalPemasukan = String.format("Rp %.d", (int) totalPemasukan);
+                        String formatTotalPengeluaran = String.format("Rp %.d", (int) totalPengeluaran);
+                        String formatTotalKas = String.format("Rp %.d", (int) totalKas);
+                        System.out.println("|----|---------------------|--------------|-------------------|------------|");
+                        System.out.printf("| %-24s | %-45s |\n", "TOTAL PEMASUKAN:", formatTotalPemasukan);
+                        System.out.printf("| %-24s | %-45s |\n", "TOTAL PENGELUARAN:", formatTotalPengeluaran);
+                        System.out.printf("| %-24s | %-45s |\n", "JUMLAH KAS SEKARANG:", formatTotalKas);
+                        System.out.println("|==========================================================================|");
                         }
                     }
 
@@ -187,162 +181,38 @@ public class ClassCashManagementApp {
                             int nomorSiswa = scanner.nextInt();
 
                             if (nomorSiswa > 0 && nomorSiswa <= namaSiswa.size()) {
-                                // Kurangi total kas
-                                totalKas -= kasSiswa.get(nomorSiswa - 1);
-                                totalPemasukan -= kasSiswa.get(nomorSiswa - 1);
+                                // Kurangi total kas dengan kas siswa yang dihapus
+                                double kasDihapus = kasSiswa.get(nomorSiswa - 1);
+                                totalKas -= kasDihapus;
 
-                                // Hapus data siswa
-                                System.out.println("Data siswa " + namaSiswa.get(nomorSiswa - 1) + " berhasil dihapus.");
+                                // Hapus siswa dari ArrayList
                                 namaSiswa.remove(nomorSiswa - 1);
                                 kasSiswa.remove(nomorSiswa - 1);
+
+                                System.out.println("Data berhasil dihapus. Kas dikurangi sebesar Rp " + kasDihapus);
                             } else {
                                 System.out.println("Nomor siswa tidak valid.");
-                            }
-                        }
-                    }
-
-                    // Edit nama siswa
-                    case 6 -> {
-                        if (namaSiswa.isEmpty()) {
-                            System.out.println("Belum ada data siswa.");
-                        } else {
-                            System.out.println("\nDaftar Siswa:");
-                            for (int i = 0; i < namaSiswa.size(); i++) {
-                                System.out.printf("%d. %s - Kas: Rp %.2f\n", (i + 1), namaSiswa.get(i), kasSiswa.get(i));
-                            }
-
-                            System.out.print("Masukkan nomor siswa yang ingin diedit namanya: ");
-                            int nomorSiswa = scanner.nextInt();
-                            scanner.nextLine(); // Membersihkan input buffer
-
-                            if (nomorSiswa > 0 && nomorSiswa <= namaSiswa.size()) {
-                                System.out.print("Masukkan nama baru untuk siswa: ");
-                                String namaBaru = scanner.nextLine().trim();
-
-                                // Validasi nama tidak kosong dan tidak mengandung angka
-                                if (namaBaru.isEmpty() || namaBaru.matches(".*\\d.*")) {
-                                    System.out.println("Nama tidak boleh kosong atau mengandung angka. Coba lagi.");
-                                    break;
-                                }
-
-                                // Edit nama siswa
-                                namaSiswa.set(nomorSiswa - 1, namaBaru.toUpperCase());
-                                System.out.println("Nama siswa berhasil diubah menjadi " + namaBaru.toUpperCase() + ".");
-                            } else {
-                                System.out.println("Nomor siswa tidak valid.");
-                            }
-                        }
-                    }
-
-                    // Manipulasi String Submenu
-                    case 7 -> {
-                        boolean manipulasiStringRunning = true;
-
-                        while (manipulasiStringRunning) {
-                            System.out.println("\n|==============================================|");
-                            System.out.println("|>>           Submenu Manipulasi String      <<|");
-                            System.out.println("|==============================================|");
-                            System.out.printf("| %-2s | %-39s |\n", "1", "Cari siswa berdasarkan nama");
-                            System.out.println("|----------------------------------------------|");
-                            System.out.printf("| %-2s | %-39s |\n", "2", "Urutkan nama siswa (A-Z)");
-                            System.out.println("|----------------------------------------------|");
-                            System.out.printf("| %-2s | %-39s |\n", "3", "Statistik panjang nama siswa");
-                            System.out.println("|----------------------------------------------|");
-                            System.out.printf("| %-2s | %-39s |\n", "4", "Tampilkan nama terbalik");
-                            System.out.println("|----------------------------------------------|");
-                            System.out.printf("| %-2s | %-39s |\n", "5", "Kembali ke menu utama");
-                            System.out.println("|==============================================|");
-                            System.out.print("Pilih menu manipulasi string: ");
-                            int pilihanString = scanner.nextInt();
-
-                            switch (pilihanString) {
-                                // Cari siswa berdasarkan nama
-                                case 1 -> {
-                                    scanner.nextLine(); // Membersihkan input buffer
-                                    System.out.print("Masukkan nama siswa yang ingin dicari: ");
-                                    String cariNama = scanner.nextLine().trim().toUpperCase();
-
-                                    boolean ditemukan = false;
-                                    for (String nama : namaSiswa) {
-                                        if (nama.contains(cariNama)) {
-                                            System.out.println("Ditemukan siswa: " + nama);
-                                            ditemukan = true;
-                                        }
-                                    }
-
-                                    if (!ditemukan) {
-                                        System.out.println("Nama siswa tidak ditemukan.");
-                                    }
-                                }
-
-                                // Urutkan nama siswa (A-Z)
-                                case 2 -> {
-                                    if (namaSiswa.isEmpty()) {
-                                        System.out.println("Belum ada data siswa.");
-                                    } else {
-                                        Collections.sort(namaSiswa);
-                                        System.out.println("Nama siswa berhasil diurutkan (A-Z):");
-                                        for (String nama : namaSiswa) {
-                                            System.out.println(nama);
-                                        }
-                                    }
-                                }
-
-                                // Statistik panjang nama siswa
-                                case 3 -> {
-                                    if (namaSiswa.isEmpty()) {
-                                        System.out.println("Belum ada data siswa.");
-                                    } else {
-                                        System.out.println("Statistik panjang nama siswa:");
-                                        for (String nama : namaSiswa) {
-                                            System.out.println(nama + " - Panjang: " + nama.length() + " karakter");
-                                        }
-                                    }
-                                }
-
-                                // Tampilkan nama terbalik
-                                case 4 -> {
-                                    if (namaSiswa.isEmpty()) {
-                                        System.out.println("Belum ada data siswa.");
-                                    } else {
-                                        System.out.println("Nama siswa dalam urutan terbalik:");
-                                        for (String nama : namaSiswa) {
-                                            StringBuilder sb = new StringBuilder(nama);
-                                            System.out.println(sb.reverse().toString());
-                                        }
-                                    }
-                                }
-
-                                // Kembali ke menu utama
-                                case 5 -> {
-                                    manipulasiStringRunning = false;
-                                }
-
-                                // Pilihan tidak valid
-                                default -> {
-                                    System.out.println("Pilihan tidak valid, coba lagi.");
-                                }
                             }
                         }
                     }
 
                     // Tampilkan total kas
-                    case 8 -> {
-                        System.out.println("Total kas saat ini adalah: Rp " + totalKas);
+                    case 6 -> {
+                        String formatRupiah = String.format("Rp %.d", (int) totalKas);
+                        System.out.println("Total kas saat ini: " + formatRupiah);
                     }
 
-                    // Keluar
-                    case 9 -> {
-                        System.out.println("Terima kasih telah menggunakan aplikasi ini!");
+                    // Keluar dari aplikasi
+                    case 7 -> {
                         running = false;
+                        System.out.println("Terima kasih telah menggunakan aplikasi ini.");
                     }
 
-                    // Pilihan tidak valid
-                    default -> {
-                        System.out.println("Pilihan tidak valid, coba lagi.");
-                    }
+                    default -> System.out.println("Pilihan tidak valid, coba lagi.");
                 }
             }
+
+            scanner.close();
         }
     }
 }

@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Test",
+            "request": "launch",
+            "mainClass": "Test",
+            "projectName": "VsCode_83c1b501"
+        },
+        {
+            "type": "java",
+            "name": "ClassCashManagementApp",
+            "request": "launch",
+            "mainClass": "ClassCashManagementApp",
+            "projectName": "VsCode_83c1b501"
+        },
+        {
+            "type": "java",
             "name": "CashManagementApp",
             "request": "launch",
             "mainClass": "CashManagementApp",
